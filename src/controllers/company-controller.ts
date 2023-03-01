@@ -12,8 +12,6 @@ export class CompanyController {
 
     async one(request: Request, response: Response, next: NextFunction) {
         const cnpj = request.params.cnpj
-        
-
         const company = await this.companyRepository.findOne({
             where: { cnpj }
         })
@@ -33,6 +31,11 @@ export class CompanyController {
                 hrContactName,
                 hrContactEmail,
                 hrContactPhone } = request.body;
+        
+        let companyToAdd = await this.companyRepository.findOneBy({ cnpj })
+        if (companyToAdd) {
+            return "Company already registered!"
+        }
 
         const company = Object.assign(new Company(), {
             cnpj,
