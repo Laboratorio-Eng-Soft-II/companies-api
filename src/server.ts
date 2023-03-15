@@ -4,7 +4,6 @@ import { Routes } from "./routes"
 import config from 'config';
 import validateEnv from './utils/validate-env';
 import { AppDataSource } from './utils/data-source';
-import redisClient from './utils/connect-redis';
 
 AppDataSource.initialize()
   .then(async () => {
@@ -27,22 +26,21 @@ AppDataSource.initialize()
     // ROUTES
     Routes.forEach(route => {
       (app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-          const result = (new (route.controller as any))[route.action](req, res, next)
-          if (result instanceof Promise) {
-              result.then(result => result !== null && result !== undefined ? res.send(result) : undefined)
+        const result = (new (route.controller as any))[route.action](req, res, next)
+        if (result instanceof Promise) {
+          result.then(result => result !== null && result !== undefined ? res.send(result) : undefined)
 
-          } else if (result !== null && result !== undefined) {
-              res.json(result)
-          }
+        } else if (result !== null && result !== undefined) {
+          res.json(result)
+        }
       })
-  })
+    })
 
     // HEALTH CHECKER
     app.get('/api/healthchecker', async (_, res: Response) => {
-      const message = await redisClient.get('try');
       res.status(200).json({
         status: 'success',
-        message,
+        message: 'healthy',
       });
     });
 
