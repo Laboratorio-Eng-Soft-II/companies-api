@@ -2,21 +2,21 @@ version: '3'
 services:
   postgres:
     image: postgres:latest
-    container_name: postgres
+    container_name: postgres-companies
     ports:
       - '6500:5432'
     volumes:
-      - progresDB:/var/lib/postgresql/data
+      - postgresCompaniesDB:/var/lib/postgresql/data
     env_file:
       - ./.env
 
   redis:
     image: redis:alpine
-    container_name: redis
+    container_name: redis-companies
     ports:
       - '6379:6379'
     volumes:
-      - redisDB:/data
+      - redisCompaniesDB:/data
 volumes:
-  progresDB:
-  redisDB:
+  postgresCompaniesDB:
+  redisCompaniesDB:
