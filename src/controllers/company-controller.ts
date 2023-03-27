@@ -101,4 +101,23 @@ export class CompanyController {
         }
     }
 
+    async deletePosition(request: Request, response: Response, next: NextFunction){
+        const positionsPort = config.get<number>('positionsPort');
+        const { cnpj } = request.params
+        const { id } = request.body
+        let company = await this.companyRepository.findOneBy({ cnpj })
+
+        if (!company) {
+            return "This company does not exist!"
+        }
+
+        const axiosResponse = await axios.delete('http://localhost:' + positionsPort+ '/positions/' + id)
+
+        return {
+            status: axiosResponse.status,
+            id,
+            cnpj
+        }
+    }
+
 }
