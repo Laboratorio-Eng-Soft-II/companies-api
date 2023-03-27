@@ -1,6 +1,8 @@
 import { AppDataSource } from '../utils/data-source'
 import { NextFunction, Request, Response } from "express"
 import { Company } from "../entities/Company"
+import axios from 'axios'
+import config from 'config'
 
 export class CompanyController {
 
@@ -62,6 +64,41 @@ export class CompanyController {
         await this.companyRepository.remove(companyToRemove)
 
         return "Company has been removed!"
+    }
+
+    async postPosition(request: Request, response: Response, next: NextFunction){
+        const positionsPort = config.get<number>('positionsPort');
+        const {
+            cnpj,
+            type,
+            description,
+            main_work,
+            required_skills,
+            salary,
+            benefits
+        } = request.body
+        let company = await this.companyRepository.findOneBy({ cnpj })
+
+        if (!company) {
+            return "This company does not exist!"
+        }
+
+        const axiosResponse = await axios.post('http://localhost:' + positionsPort+ '/positions', {
+            cnpj,
+            type,
+            description,
+            main_work,
+            required_skills,
+            salary,
+            benefits
+        })
+
+        return {
+            status: axiosResponse.status,
+            id: axiosResponse.data.id,
+            cnpj,
+            description
+        }
     }
 
 }
