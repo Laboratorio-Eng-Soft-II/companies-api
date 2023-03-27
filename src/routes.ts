@@ -20,4 +20,14 @@ export const Routes = [{
     route: "/companies/:cnpj",
     controller: CompanyController,
     action: "remove"
+}, {
+    method: "post",
+    route: "/companies/:cnpj/positions",
+    controller: CompanyController,
+    action: "postPosition"
+}, {
+    method: "delete",
+    route: "/companies/:cnpj/positions",
+    controller: CompanyController,
+    action: "deletePosition"
 }]
