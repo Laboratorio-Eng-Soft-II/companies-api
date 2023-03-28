@@ -67,7 +67,7 @@ export class CompanyController {
     }
 
     async postPosition(request: Request, response: Response, next: NextFunction){
-        const positionsPort = config.get<number>('positionsPort');
+        const positionsUrl = config.get<number>('positionsUrl');
         const {
             cnpj,
             type,
@@ -83,7 +83,7 @@ export class CompanyController {
             return "This company does not exist!"
         }
 
-        const axiosResponse = await axios.post('http://localhost:' + positionsPort+ '/positions', {
+        const axiosResponse = await axios.post(positionsUrl + '/positions', {
             cnpj,
             type,
             description,
@@ -102,7 +102,7 @@ export class CompanyController {
     }
 
     async deletePosition(request: Request, response: Response, next: NextFunction){
-        const positionsPort = config.get<number>('positionsPort');
+        const positionsUrl = config.get<number>('positionsUrl');
         const { cnpj } = request.params
         const { id } = request.body
         let company = await this.companyRepository.findOneBy({ cnpj })
@@ -111,7 +111,7 @@ export class CompanyController {
             return "This company does not exist!"
         }
 
-        const axiosResponse = await axios.delete('http://localhost:' + positionsPort+ '/positions/' + id)
+        const axiosResponse = await axios.delete(positionsUrl+ '/positions/' + id)
 
         return {
             status: axiosResponse.status,
