@@ -1,6 +1,6 @@
 export default {
     port: 'PORT',
-    positionsPort: 'POSITIONS_PORT',
+    positionsUrl: 'POSITIONS_URL',
     postgresConfig: {
       host: 'POSTGRES_HOST',
       port: 'POSTGRES_PORT',

@@ -4,7 +4,7 @@ const validateEnv = () => {
   cleanEnv(process.env, {
     NODE_ENV: str(),
     PORT: port(),
-    POSITIONS_PORT: port(),
+    POSITIONS_URL: str(),
     POSTGRES_HOST: str(),
     POSTGRES_PORT: port(),
     POSTGRES_USER: str(),
