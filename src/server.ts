@@ -57,7 +57,6 @@ AppDataSource.initialize()
     });
 
     // UNHANDLED ROUTE
-
     // GLOBAL ERROR HANDLER
 
     const port = config.get<number>("port");
