@@ -15,15 +15,15 @@ AppDataSource.initialize()
 
     // MIDDLEWARE
 
-    // 4. Cors
-    app.use(cors);
-
     // 1. Body parser
     app.use(express.json());
 
     // 2. Logger
 
     // 3. Cookie Parser
+
+    // 4. Cors
+    //app.use(cors);
 
     // ROUTES
     Routes.forEach((route) => {
