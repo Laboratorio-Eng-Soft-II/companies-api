@@ -25,6 +25,7 @@ export class CompanyController {
     }
 
     async save(request: Request, response: Response, next: NextFunction) {
+        const authUrl = config.get<string>('authUrl');
         const { cnpj,
                 corporateName,
                 address,
@@ -32,7 +33,8 @@ export class CompanyController {
                 phone,
                 hrContactName,
                 hrContactEmail,
-                hrContactPhone } = request.body;
+                hrContactPhone,
+                password } = request.body;
         
         let companyToAdd = await this.companyRepository.findOneBy({ cnpj })
         if (companyToAdd) {
@@ -48,6 +50,13 @@ export class CompanyController {
             hrContactName,
             hrContactEmail,
             hrContactPhone
+        })
+
+        const axiosResponse = await axios.post(authUrl + '/add', {
+            email: hrContactEmail,
+            password,
+            category: "company",
+            nusp_cnpj: cnpj
         })
 
         return this.companyRepository.save(company)
