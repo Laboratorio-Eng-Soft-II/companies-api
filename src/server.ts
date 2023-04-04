@@ -23,7 +23,7 @@ AppDataSource.initialize()
     // 3. Cookie Parser
 
     // 4. Cors
-    //app.use(cors);
+    app.use(cors());
 
     // ROUTES
     Routes.forEach((route) => {
@@ -57,7 +57,6 @@ AppDataSource.initialize()
     });
 
     // UNHANDLED ROUTE
-
     // GLOBAL ERROR HANDLER
 
     const port = config.get<number>("port");
