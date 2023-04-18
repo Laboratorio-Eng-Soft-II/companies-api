@@ -116,7 +116,8 @@ export class CompanyController {
         
         const {
             author,
-            nusp_cnpj,
+            author_nusp_cnpj,
+            target_nusp_cnpj,
             answers,
             comments
         } = request.body
@@ -130,7 +131,8 @@ export class CompanyController {
         const axiosResponse = await axios.post(feedbackUrl + '/feedback', {
             author,
             target: 'student',
-            nusp_cnpj,
+            author_nusp_cnpj,
+            target_nusp_cnpj,
             answers,
             comments
         })
@@ -138,7 +140,8 @@ export class CompanyController {
         return {
             status: axiosResponse.status,
             id: axiosResponse.data.id,
-            nusp_cnpj,
+            author_nusp_cnpj,
+            target_nusp_cnpj,
             author
         }
     }
